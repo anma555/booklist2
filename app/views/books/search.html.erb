@@ -1,0 +1,37 @@
+<div class="text-center">
+  <h1>Search Books</h1>
+</div>
+
+<div class="row center">
+  <div class="col-sm-6 offset-sm-3">
+    <%= form_with(url: search_books_path, local: true) do |f| %>
+	    <div class="form-group" >
+		    <%= f.label :isbn, 'ISBN' %>
+		    <%= f.text_field :isbn, class: 'form-control' %>
+	    </div>
+      <%= f.submit '検索', class: 'btn btn-primary' %>
+    <% end %>
+    
+    <div id='result' class="mt-5">
+	    <% if @search_book.present? %>
+	      <div class="media">
+	        <div class="mr-3">
+            <%= image_tag(@search_book['mediumImageUrl'].gsub('?_ex=120x120', '?_ex=350x350'), style: "width: 64px;height: 91px;display: inline-block;") %>
+          </div>
+          <div class="media-body"> 
+            <h5 class="mt-0"><%= @search_book['title'] %></h5>
+            <%= @search_book['author'] %>
+          </div>
+        </div>
+        <%= form_with(model: @book , local: true) do |f| %>
+          <%= f.hidden_field :isbn %>
+          <%= f.hidden_field :title %>
+          <%= f.hidden_field :author %>
+          
+          <%= f.submit 'この本を登録する', class: 'btn btn-lg btn-primary float-right mt-5' %>
+        <% end %>
+        
+      <% end %>
+    </div>
+  </div>
+</div>

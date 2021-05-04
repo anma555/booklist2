@@ -7,4 +7,11 @@ Rails.application.routes.draw do
   
   get 'signup', to: 'users#new'
   resources :users, only: [:create]
+
+  resources :books, only: [:index, :new, :create, :edit, :update, :destroy] do
+    collection do
+      get :search
+      post :search
+    end
+  end
 end

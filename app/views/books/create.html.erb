@@ -1,0 +1,48 @@
+<div class="text-center">
+  <h1>書籍登録</h1>
+</div>
+
+<div class="row center">
+  <div class="col-sm-6 offset-sm-3">
+    <%= form_with(model: @book, local: true) do |f| %>
+	    <div class="form-group" >
+		    <%= f.label :isbn, 'ISBN' %>
+		    <%= f.text_field :isbn, value: @book.isbn, class: 'form-control', readonly: true %>
+	    </div>
+      <div class="media">
+        <div class="mr-3">
+          <%= image_tag(@book_imageurl, style: "width: 64px;height: 91px;display: inline-block;") %>
+        </div>
+        <div class="media-body"> 
+          <h5 class="mt-0"><%= @book['title'] %></h5>
+          <%= @book['author'] %>
+        </div>
+      </div>
+    
+      <div class="btn-group btn-group-toggle float-right mt-5" data-toggle="buttons">
+        <label class="btn btn-outline-primary active">
+          <input type="radio" name="options" id="option1" value="0" autocomplete="off" checked> 未読
+        </label>
+        <label class="btn btn-outline-primary">
+          <input type="radio" name="options" id="option2" value="1" autocomplete="off"> 読書中
+        </label>
+        <label class="btn btn-outline-primary">
+          <input type="radio" name="options" id="option3" value="2" autocomplete="off"> 読了
+        </label>
+      </div>
+      <div>
+        <%= f.label :status, '未読' %>
+        <%= f.radio_button :status, 0 %>
+        
+        <%= f.label :status, '読書中' %>
+        <%= f.radio_button :status, 1 %>
+        
+        <%= f.label :status, '読了' %>
+        <%= f.radio_button :status, 2 %>
+      </div>
+      <div class="float-right mt-5">
+        <%= f.submit '登録', class: 'btn btn-lg btn-primary float-right mt-5' %>
+      </div>
+    <% end %>
+  </div>
+</div>

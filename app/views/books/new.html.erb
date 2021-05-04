@@ -1,0 +1,30 @@
+<div class="text-center">
+  <h1>書籍登録</h1>
+</div>
+
+<div class="row center">
+  <div class="col-sm-6 offset-sm-3">
+    <%= form_with(model: @book, local: true) do |f| %>
+	    <div class="form-group" >
+		    <%= f.label :isbn, 'ISBN' %>
+		    <%= f.text_field :isbn, value: @book.isbn, class: 'form-control', readonly: true %>
+	    </div>
+    <% end %>
+    
+    <div id='result' class="mt-5">
+	    <% if @book.present? %>
+	      <div class="media">
+	        <div class="mr-3">
+            
+          </div>
+          <div class="media-body"> 
+            <h5 class="mt-0"><%= @book['title'] %></h5>
+            <%= @book['author'] %>
+          </div>
+        </div>
+        <%= link_to '登録', new_book_path, class: 'btn btn-lg btn-primary float-right mt-5' %>
+        
+      <% end %>
+    </div>
+  </div>
+</div>

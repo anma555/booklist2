@@ -1,0 +1,7 @@
+<h1>Books#index</h1>
+
+<ul>
+  <%= @books.each do |book| %>
+    <li><p><%= book.id %></p><p><%= book.isbn %></p></li>
+  <% end %>
+</ul>

@@ -52,3 +52,9 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'kaminari'
+
+# Amazon API
+# gem 'paapi'
+
+# Rakuten API
+gem 'rakuten_web_service'
