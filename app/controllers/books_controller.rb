@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :require_user_logged_in
+  before_action :correct_user, only: [:edit, :destroy]
   
   def index
     @books = current_user.books.order(id: :desc).page(params[:page]).per(8)
@@ -74,6 +75,13 @@ class BooksController < ApplicationController
   
   def book_params
     params.require(:book).permit(:isbn, :title, :author, :status, :memo)
+  end
+  
+  def correct_user
+    @book = current_user.books.find_by(id: params[:id])
+    unless @book
+      redirect_to books_path
+    end
   end
   
 end

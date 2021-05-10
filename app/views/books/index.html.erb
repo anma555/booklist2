@@ -9,7 +9,9 @@
       <% @books.each do |book| %>
         <div class="media border p-3 m-2">
           <div>
-            <%= link_to book.id, edit_book_path(book.id), class: 'badge badge-primary m-4' %>
+            <%= link_to edit_book_path(book.id) do %>
+              <i class="far fa-edit fa-lg m-3"></i>
+            <% end %>
           </div>
           <div class="mr-3">
             <%= image_tag(book_imageurl(book.isbn), style: "width: 64px;height: 91px;display: inline-block;", alt: book.title) %>
