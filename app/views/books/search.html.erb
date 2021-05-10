@@ -1,5 +1,5 @@
 <div class="text-center">
-  <h1>Search Books</h1>
+  <h1>書籍検索</h1>
 </div>
 
 <div class="row center">
@@ -16,21 +16,15 @@
 	    <% if @search_book.present? %>
 	      <div class="media">
 	        <div class="mr-3">
-            <%= image_tag(@search_book['mediumImageUrl'].gsub('?_ex=120x120', '?_ex=350x350'), style: "width: 64px;height: 91px;display: inline-block;") %>
+            <%= image_tag(book_imageurl(@search_book['isbn']), style: "width: 64px;height: 91px;display: inline-block;", alt: @search_book['title']) %>
           </div>
           <div class="media-body"> 
             <h5 class="mt-0"><%= @search_book['title'] %></h5>
             <%= @search_book['author'] %>
           </div>
         </div>
-        <%= form_with(model: @book , local: true) do |f| %>
-          <%= f.hidden_field :isbn %>
-          <%= f.hidden_field :title %>
-          <%= f.hidden_field :author %>
-          
-          <%= f.submit 'この本を登録する', class: 'btn btn-lg btn-primary float-right mt-5' %>
-        <% end %>
         
+        <%= link_to 'この本を登録する', new_book_path(book: {isbn: @book.isbn, title: @book.title, author: @book.author}), class: 'btn btn-lg btn-primary float-right mt-5' %>
       <% end %>
     </div>
   </div>

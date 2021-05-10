@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2021_04_30_060412) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id", "isbn"], name: "index_books_on_user_id_and_isbn", unique: true
     t.index ["user_id"], name: "index_books_on_user_id"
   end
 

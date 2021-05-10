@@ -9,7 +9,7 @@
       <ul class="navbar-nav">
         <% if logged_in? %>
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><%= current_user.name %></a>
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><img class="mr-2 rounded" src="<%= gravatar_url(current_user, { size: 25 }) %>" alt=""><%= current_user.name %></a>
             <ul class="dropdown-menu dropdown-menu-right">
               <li class="dropdown-item"><%= link_to 'Logout', logout_path, method: :delete %></li>
             </ul>

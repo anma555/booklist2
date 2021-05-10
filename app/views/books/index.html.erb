@@ -1,7 +1,37 @@
-<h1>Books#index</h1>
+<div class="text-center">
+  <h1>蔵書一覧</h1>
+</div>
 
-<ul>
-  <%= @books.each do |book| %>
-    <li><p><%= book.id %></p><p><%= book.isbn %></p></li>
-  <% end %>
-</ul>
+<%= link_to '新規登録' , search_books_path, class: 'btn btn-lg btn-primary mt-5' %>
+
+<div class="border-top mt-5 mb-3">
+    <% if @books.any? %>
+      <% @books.each do |book| %>
+        <div class="media border p-3 m-2">
+          <div>
+            <%= link_to book.id, edit_book_path(book.id), class: 'badge badge-primary m-4' %>
+          </div>
+          <div class="mr-3">
+            <%= image_tag(book_imageurl(book.isbn), style: "width: 64px;height: 91px;display: inline-block;", alt: book.title) %>
+          </div>
+          <div class="media-body"> 
+            <h5 class="mt-0"><%= book.title %></h5>
+            <%= book.author %>
+            <h6 class="text-secondary mt-3">ISBN:
+              <%= book.isbn %>
+            </h6>
+            <div class="btn btn-outline-dark disabled float-right">
+              <%case book.status
+                when 0 %>未読
+                <%when 1%>読書中
+                <%when 2%>読了
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <%= paginate @books %>
+    <% else %>
+      <p>書籍の登録がありません。新規登録より登録できます。</p>
+    <% end %>
+</div>

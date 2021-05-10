@@ -9,6 +9,8 @@ class CreateBooks < ActiveRecord::Migration[5.2]
       t.references :user, foreign_key: true
 
       t.timestamps
+      
+      t.index [:user_id, :isbn], unique: true
     end
   end
 end

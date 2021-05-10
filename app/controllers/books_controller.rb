@@ -2,7 +2,7 @@ class BooksController < ApplicationController
   before_action :require_user_logged_in
   
   def index
-    @books = current_user.books
+    @books = current_user.books.order(id: :desc).page(params[:page]).per(8)
   end
   
   def search
@@ -29,34 +29,51 @@ class BooksController < ApplicationController
   end
     
   def new
-
+    @book = Book.new(book_params)
+    # @book_imageurl = book_imageurl(@book.isbn)
   end
 
   def create
-    @book = Book.new(book_params)
-    @book_imageurl = book_imageurl(@book.isbn)
     
+    @book = current_user.books.build(book_params)
+    if @book.save
+      flash[:sccess] = '書籍を登録しました。'
+      redirect_to books_path
+    else
+      @books = current_user.books.order(id: :desc).page(params[:page]).per(8)
+      flash.now[:danger] = '書籍の登録に失敗しました。'
+      render 'books/index'
+    end 
   end
 
   def edit
+    @book = Book.find(params[:id])
   end
 
   def update
+    @book = Book.find(params[:id])
+    
+    if @book.update(book_params)
+      flash[:success] = '正常に更新されました'
+      redirect_to books_path
+    else
+      flash.now[:danger] = '更新されませんでした'
+      render :edit
+    end 
   end
-
+  
   def destroy
+    @book = Book.find(params[:id])
+    @book.destroy
+    
+    flash[:sccess] = '正常に削除されました。'
+    redirect_to books_path
   end
   
   private
   
   def book_params
-    params.require(:book).permit(:isbn, :title, :author, :memo, :status)
-  end
-  
-  def book_imageurl(isbn)
-    results = RakutenWebService::Books::Book.search({isbn: isbn, })
-    result = results.first()
-    image_url = result["mediumImageUrl"].gsub('?_ex=120x120', '')
+    params.require(:book).permit(:isbn, :title, :author, :status, :memo)
   end
   
 end

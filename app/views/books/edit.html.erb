@@ -1,2 +1,37 @@
-<h1>Books#edit</h1>
-<p>Find me in app/views/books/edit.html.erb</p>
+<div class="text-center mb-3">
+  <h1>蔵書編集</h1>
+</div>
+
+<div class="media border p-3 m-2">
+  <div class="m-4">
+    <%= @book.id %>
+  </div>
+  <div class="mr-3">
+    <%= image_tag(book_imageurl(@book.isbn), style: "width: 64px;height: 91px;display: inline-block;") %>
+  </div>
+  <div class="media-body"> 
+    <h5 class="mt-0"><%= @book.title %></h5>
+    <%= @book.author %>
+    <h6 class="text-secondary mt-3">ISBN:
+      <%= @book.isbn %>
+    </h6>
+  </div>
+</div>
+<div class="clearfix"></div>
+<%= form_with(model: @book, loca: true) do |f| %>
+  <div class="btn-group btn-group-sm btn-group-toggle float-right mt-3 mr-3" data-toggle="buttons">
+    <% ['未読', '読書中', '読了'].each_with_index do |text, i| %>
+      <label class="btn btn-outline-primary<%= @book.status == i ? ' active' : '' %>">
+        <%= f.radio_button :status, i, {checked: @book.status == i ? true : false} %><%= text %>
+      </label>
+    <% end %>
+  </div>
+  <div class="clearfix"></div>
+  <div class="form-group mt-3 ml-2 mr-2">
+    <%= f.label :memo, '読書メモ' %>
+    <%= f.text_area :memo, class: "form-control mt-2", size: "10x10" %>
+  </div>
+  <%= f.submit '更新する', class: "btn btn-primary float-right" %>
+  <div class="clearfix"></div>
+  <%= link_to 'この本を削除', @book, method: :delete, data: { confirm: '本当に削除してよろしいいですか？'}, class: "btn btn-danger float-righ mt-5 mb-5" %>
+<% end %>
