@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   before_action :require_user_logged_in
-  before_action :correct_user, only: [:edit, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
   
   def index
     @books = current_user.books.order(id: :desc).page(params[:page]).per(8)
@@ -39,7 +39,11 @@ class BooksController < ApplicationController
     @book = current_user.books.build(book_params)
     if @book.save
       flash[:sccess] = '書籍を登録しました。'
-      redirect_to books_path
+      if @book.status == 2 then
+        redirect_to action: :edit, id: @book.id
+      else
+        redirect_to books_path
+      end
     else
       @books = current_user.books.order(id: :desc).page(params[:page]).per(8)
       flash.now[:danger] = '書籍の登録に失敗しました。'

@@ -7,7 +7,7 @@
     <%= form_with(url: search_books_path, local: true) do |f| %>
 	    <div class="form-group" >
 		    <%= f.label :isbn, 'ISBN' %>
-		    <%= f.text_field :isbn, class: 'form-control' %>
+		    <%= f.text_field :isbn, :placeholder => "13桁のコード" ,class: 'form-control' %>
 	    </div>
       <%= f.submit '検索', class: 'btn btn-primary' %>
     <% end %>
